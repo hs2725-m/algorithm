@@ -44,25 +44,24 @@ Constraints:
  * @param {string} logoutTime
  * @return {number}
  */
- var numberOfRounds = function(loginTime, logoutTime) {
+var numberOfRounds = function (loginTime, logoutTime) {
   let answer = 0;
-  const [loginHours, loginMinutes] = loginTime.split(':').map(time => +time);
-  const [logoutHours, logoutMinutes] = logoutTime.split(':').map(time => +time);
+  const [loginHours, loginMinutes] = loginTime.split(':').map((time) => +time);
+  const [logoutHours, logoutMinutes] = logoutTime.split(':').map((time) => +time);
   let hours = 0;
   let minutes = 0;
-  
-  if (loginHours < logoutHours || 
-      loginHours === logoutHours && loginMinutes < logoutMinutes) {
-      hours = logoutHours - loginHours;
+
+  if (loginHours < logoutHours || (loginHours === logoutHours && loginMinutes < logoutMinutes)) {
+    hours = logoutHours - loginHours;
   } else {
-      hours = 24 - loginHours + logoutHours;
+    hours = 24 - loginHours + logoutHours;
   }
-  
-  minutes = logoutMinutes - logoutMinutes % 15;
+
+  minutes = logoutMinutes - (logoutMinutes % 15);
   // console.log(minutes)
-  minutes -= loginMinutes + (loginMinutes % 15 === 0 ? 0 : 15 - loginMinutes % 15)
+  minutes -= loginMinutes + (loginMinutes % 15 === 0 ? 0 : 15 - (loginMinutes % 15));
   // console.log(hours, minutes)
-  
+
   answer = hours * 4 + minutes / 15;
   return answer < 0 ? 0 : answer;
 };
@@ -73,7 +72,7 @@ Constraints:
  * @param {string} logoutTime
  * @return {number}
  */
- function numberOfRounds(loginTime, logoutTime) {
+function numberOfRounds(loginTime, logoutTime) {
   let start = 60 * Number(loginTime.substring(0, 2)) + Number(loginTime.substring(3));
   let finish = 60 * Number(logoutTime.substring(0, 2)) + Number(logoutTime.substring(3));
   if (start > finish) finish += 60 * 24;
@@ -86,17 +85,17 @@ Constraints:
  * @param {string} logoutTime
  * @return {number}
  */
- var numberOfRounds = function(loginTime, logoutTime) {
-  function toMins(timeString){
-      return timeString.slice(0,2)*60 + +timeString.slice(3);
+var numberOfRounds = function (loginTime, logoutTime) {
+  function toMins(timeString) {
+    return timeString.slice(0, 2) * 60 + +timeString.slice(3);
   }
   loginTime = toMins(loginTime);
   logoutTime = toMins(logoutTime);
-  if(logoutTime - loginTime)
-  firstRoundIndex = Math.ceil(loginTime/15);
-  firstRoundTime = 15*firstRoundIndex;
+  if (logoutTime - loginTime) firstRoundIndex = Math.ceil(loginTime / 15);
+  firstRoundTime = 15 * firstRoundIndex;
   if (logoutTime > loginTime && logoutTime < firstRoundTime + 15) return 0;
-  lastRoundIndex = Math.floor(logoutTime/15) - 1;
-  return (lastRoundIndex >= firstRoundIndex) ? lastRoundIndex - firstRoundIndex + 1 :
-      96 - (firstRoundIndex - lastRoundIndex - 1);
+  lastRoundIndex = Math.floor(logoutTime / 15) - 1;
+  return lastRoundIndex >= firstRoundIndex
+    ? lastRoundIndex - firstRoundIndex + 1
+    : 96 - (firstRoundIndex - lastRoundIndex - 1);
 };
